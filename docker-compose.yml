@@ -1,0 +1,16 @@
+version: '3'
+services:
+  letsencrypt-nginx-container:
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    container_name: 'letsencrypt-nginx-container'
+    env_file:
+      - .env
+    ports:
+      - "80:80"
+    networks:
+      - docker-network
+networks:
+  docker-network:
+    driver: bridge
