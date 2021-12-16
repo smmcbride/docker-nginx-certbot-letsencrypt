@@ -8,6 +8,6 @@ server {
     }
 
     location / {
-        return 301 https://${LETSENCRYPT_DOMAIN}$request_uri;
+      root /usr/share/nginx/html;
     }
 }
