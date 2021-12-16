@@ -1,0 +1,6 @@
+FROM nginx:1.21.4
+COPY stage1-nginx.conf.template /etc/nginx/conf.d/default.conf.template
+COPY stage1-docker-entrypoint.sh /home
+ENTRYPOINT ["/home/stage1-docker-entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]
+
