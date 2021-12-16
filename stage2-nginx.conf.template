@@ -24,6 +24,6 @@ server {
     ssl_certificate_key /etc/nginx/ssl/live/${LETSENCRYPT_DOMAIN}/privkey.pem;
     
     location / {
-    	# ...
+      root /usr/share/nginx/html;
     }
 }
