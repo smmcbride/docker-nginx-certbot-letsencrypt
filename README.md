@@ -16,4 +16,4 @@ Helpful resources when generating this project:
 * https://medium.com/@agusnavce/nginx-server-with-ssl-certificates-with-lets-encrypt-in-docker-670caefc2e31
 * https://unix.stackexchange.com/questions/294378/replacing-only-specific-variables-with-envsubst/294400#294400
 * https://mindsers.blog/post/https-using-nginx-certbot-docker/
-
+* https://stackoverflow.com/questions/991758/how-to-get-pem-file-from-key-and-crt-files
