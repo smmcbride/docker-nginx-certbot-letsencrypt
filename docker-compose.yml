@@ -1,16 +1,20 @@
 version: '3'
 services:
-  letsencrypt-nginx-container:
+  nginx:
     build:
       context: .
       dockerfile: Dockerfile-nginx
-    container_name: 'letsencrypt-nginx-container'
     env_file:
       - .env
     ports:
-      - "80:80"
-    networks:
-      - docker-network
-networks:
-  docker-network:
-    driver: bridge
+      - 80:80
+      - 443:443
+    restart: always
+    volumes:
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
