@@ -1,4 +1,6 @@
-**LetsEncrypt Utility**
+## LetsEncrypt Utility
+
+### Note: *Your machine must be accessible on port 80 from the internet*
 
 Clone this repo onto your server
 
