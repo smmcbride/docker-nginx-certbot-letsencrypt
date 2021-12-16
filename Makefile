@@ -2,11 +2,12 @@
 include .env
 export
 
-stage1_up: ## Runs nginx and certbot containers with only port 80
-	docker-compose -f stage1-docker-compose.yml up -d
+stage1_up: ## Run nginx on port 80 as a sanity check
+	docker-compose -f stage1-docker-compose.yml up 
 
-stage1_down: ## Stops initial webserver that will respond on port 80
-	docker-compose -f stage1-docker-compose.yml down
+stage1_staging_cert: ##  Run nginx on port 80 and request a _staging_ certificate
+	docker-compose -f stage1-docker-compose.yml up  -d
+	@./stage1-issue-cert-staging.sh
 
 stage2_up: ## Runs secure webserver that will forward responses to port 443
 	docker-compose -f stage2-docker-compose.yml up
