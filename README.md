@@ -4,11 +4,7 @@
 
 Clone this repo onto your server
 
-Create an `.env` file with the following contents, replacing `example.com` with your domain name:
-
-```
-LETSENCRYPT_DOMAIN=example.com
-```
+Copy `env.example` to `.env` file and replace the values with your server's domain and email address.
 
 Verify functionality, run:
 ```
