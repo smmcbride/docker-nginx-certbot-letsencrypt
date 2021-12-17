@@ -2,8 +2,6 @@
 
 Enable HTTPS on your server with Nginx, Docker & Certbot (from LetsEncrypt!)
 
----
-
 ## Prerequisites
 
 1. You should already own the domain you're wanting to secure, and have the 
@@ -18,11 +16,9 @@ Enable HTTPS on your server with Nginx, Docker & Certbot (from LetsEncrypt!)
 
 # Using this project:
 
----
-
 The files in this project are broken into two groups, one which configures and 
-launches an HTTP server (stage1-*) and another which will configure and
-launch a server with HTTPS configured (stage2-*).
+launches an HTTP server (stage1-\*) and another which will configure and
+launch a server with HTTPS configured (stage2-\*).
 
 The first three Steps below will launch an Nginx server with port 80 (HTTP) 
 configured to respond to certbot's challenge request, and allow you to generate 
@@ -39,7 +35,6 @@ line.
 
 ### Step 1: Create environment variables
 
----
 Copy the `env.example` file to `.env` and replace the values with your server's 
 domain and email address.
 
@@ -49,8 +44,6 @@ The required variables are:
 
 
 ### Step2: Sanity check your server and domain configuration
-
----
 
 Run the following command to build and launch the HTTP server.
 
@@ -66,8 +59,6 @@ If successful, press `Ctrl-C` to stop the server and proceed.
 
 
 ### Step 3:  Generate a certificate
-
----
 
 LetsEncrypt has [rate limits](https://letsencrypt.org/docs/rate-limits/) in 
 place for production (real) certificates, so it's a good idea to test 
@@ -98,9 +89,8 @@ your system containing the certificate files.
 Note:  These files contain _**secret keys**_ which should not leave your server,
 so don't go pasting them into an email/slack for anyone to see.
 
-### Step 4: Verify the certificate
 
----
+### Step 4: Verify the certificate
 
 If **Step 3** completes successfully you are ready to re-build your Nginx 
 container and launch the HTTPS configuration to verify the certificate. The 
@@ -127,23 +117,21 @@ Congratulations, you've got a working SSL certificate for your domain!
 
 ### Step 5: What's next?
 
----
-
 Your working directory now contains a folder named `certbot` with all of the 
 certificate files.  You can copy this folder and configure your own project's
 Nginx container similarly to this project, or make them available in any other
 way you deem appropriate.  More documentation TBD.
 
+
 ### TODO:
+
 * Provide further documentation and examples for using the certificates.
 * Provide further documentation and examples for refreshing the certificate 
   before it expires.
 
----
 
 ## Acknowledgements
 
----
 This project co-ordinates the activity of several free and open-source projects,
 namely [Nginx](https://nginx.org/en/), [Docker](https://www.docker.com/), 
 [LetsEncrypt](https://letsencrypt.org/), and [Certbot](https://certbot.eff.org/)
