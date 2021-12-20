@@ -48,7 +48,7 @@ The required variables are:
 Run the following command to build and launch the HTTP server.
 
 ```shell
-make  http_up
+make http
 ```
 
 Access your server's URL in a browser, you should expect to see a simple webpage
@@ -98,9 +98,7 @@ server from the previous step is likely still running, so execute the following
 commands to stop, rebuild, and re-deploy the Nginx server.
 
 ```shell
-make http_down
-make https_build
-make https_up
+make https
 ```
 
 Visit your domain again. You should be re-directed to the HTTPS domain. 
@@ -117,15 +115,24 @@ Congratulations, you've got a working SSL certificate for your domain!
 
 ### Step 5: What's next?
 
-Your working directory now contains a folder named `certbot` with all of the 
+Stop the server with:
+```shell
+make down
+```
+
+Your working directory now contains a folder named `certbot` with the 
 certificate files.  You can copy this folder and configure your own project's
 Nginx container similarly to this project, or make them available in any other
 way you deem appropriate.  More documentation TBD.
 
 
+### Example Usage:
+
+[Install this project on an AWS EC2 instance](./README_AWS.md)
+
+
 ### TODO:
 
-* Provide further documentation and examples for using the certificates.
 * Provide further documentation and examples for refreshing the certificate 
   before it expires.
 
