@@ -38,9 +38,12 @@ line.
 Copy the `env.example` file to `.env` and replace the values with your server's 
 domain and email address.
 
-The required variables are:
+Required variables:
 * `LETSENCRYPT_DOMAIN` the domain name (_i.e._ `example.com`)
 * `LETSENCRYPT_EMAIL` the administrator email (_i.e._ `username@example.com`)
+
+Optional variables:
+* `APPLICATION_PORT` the port of your web application _if_ running locally.
 
 
 ### Step2: Sanity check your server and domain configuration
@@ -121,9 +124,16 @@ make down
 ```
 
 Your working directory now contains a folder named `certbot` with the 
-certificate files.  You can copy this folder and configure your own project's
-Nginx container similarly to this project, or make them available in any other
-way you deem appropriate.  More documentation TBD.
+certificate files. These files can by copied into your configuration as-needed,
+_or_, if your application is running on the same machine, continue with this 
+project   to run a secured nginx proxy to the local application.
+
+```shell
+make https
+```
+
+Reload the website and (if the local application is running properly) you should
+see your application served securely through this proxy.
 
 
 ### Example Usage:
@@ -135,6 +145,8 @@ way you deem appropriate.  More documentation TBD.
 
 * Provide further documentation and examples for refreshing the certificate 
   before it expires.
+* When using this to proxy to a local application, share the static folder so
+  nginx can serve those directly.
 
 
 ## Acknowledgements

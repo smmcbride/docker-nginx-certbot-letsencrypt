@@ -130,7 +130,6 @@ domain and email address.
 ```shell
 [ec2-user@ip-987-65-43-210 docker-nginx-certbot-letsencrypt]$ echo LETSENCRYPT_DOMAIN=example.com >>.env
 [ec2-user@ip-987-65-43-210 docker-nginx-certbot-letsencrypt]$ echo LETSENCRYPT_EMAIL=name@example.com >>.env
-
 ```
 
 Run the HTTP server and verify you can see the URL in the browser
@@ -158,9 +157,38 @@ goes well reload the browser and vereify you have a secure web page, with the
 _lock_ icon next to the domain name in the browser.
 
 ```shell
-
 [ec2-user@ip-987-65-43-210 docker-nginx-certbot-letsencrypt]$ make production_cert
 [ec2-user@ip-987-65-43-210 docker-nginx-certbot-letsencrypt]$ make https
 ```
 
 ![screen3](https://user-images.githubusercontent.com/2528364/146796352-6e709ee2-213e-419f-b380-a65e5b8e4bb0.png)
+
+
+## Connect to a local application
+At this point we have a secured server running and can configure it to point to 
+our local application.  For this example we will use 
+[docker-react](https://github.com/smmcbride/docker-react), which will build and 
+launch a React app through yarn on port 3000:
+
+```shell
+[ec2-user@ip-987-65-43-210 docker-nginx-certbot-letsencrypt]$ cd
+[ec2-user@ip-987-65-43-210 ~]$ git clone https://github.com/smmcbride/docker-react.git
+[ec2-user@ip-987-65-43-210 ~]$ cd docker-react/
+[ec2-user@ip-987-65-43-210 docker-react]$ make up
+```
+
+Return to the `nginx` project, configure the port and re-launch nginx:
+
+```shell
+[ec2-user@ip-987-65-43-210 docker-react]$ cd
+[ec2-user@ip-987-65-43-210 ~]$ cd docker-nginx-certbot-letsencrypt/
+[ec2-user@ip-987-65-43-210 docker-nginx-certbot-letsencrypt]$ echo APPLICATION_PORT=3000 >>.env
+```
+
+Launch a secure `nginx` proxy pointed to the local application's port:
+```shell
+make https_app
+```
+
+
+
