@@ -1,0 +1,6 @@
+FROM nginx:1.21.4
+COPY https_app-nginx.conf.template /etc/nginx/conf.d/default.conf.template
+COPY https_app-docker-entrypoint.sh /home
+ENTRYPOINT ["/home/https_app-docker-entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]
+

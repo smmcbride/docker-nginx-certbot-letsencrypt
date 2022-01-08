@@ -16,15 +16,14 @@ Enable HTTPS on your server with Nginx, Docker & Certbot (from LetsEncrypt!)
 
 # Using this project:
 
-The files in this project are broken into two groups, one which configures and 
-launches an HTTP server (stage1-\*) and another which will configure and
-launch a server with HTTPS configured (stage2-\*).
+The files in this project are broken into groups, which configure and 
+launch an HTTP or HTTPS server in variouos configuration.
 
 The first three Steps below will launch an Nginx server with port 80 (HTTP) 
 configured to respond to certbot's challenge request, and allow you to generate 
 a certificate in either production or staging mode.
 
-The last step will launch an Nginx server with port 443 (HTTPS) configured using
+The third step will launch an Nginx server with port 443 (HTTPS) configured using
 the new certificate, and programmed to reroute insecure traffic from port 80 to 
 port 443.
 
@@ -126,10 +125,10 @@ make down
 Your working directory now contains a folder named `certbot` with the 
 certificate files. These files can by copied into your configuration as-needed,
 _or_, if your application is running on the same machine, continue with this 
-project   to run a secured nginx proxy to the local application.
+project to run a secured nginx proxy to the local application.
 
 ```shell
-make https
+make https_app
 ```
 
 Reload the website and (if the local application is running properly) you should
@@ -138,7 +137,7 @@ see your application served securely through this proxy.
 
 ### Example Usage:
 
-[Install this project on an AWS EC2 instance](./README_AWS.md)
+[Install this project on an AWS EC2 instance](aws_ec2/README.md)
 
 
 ### TODO:

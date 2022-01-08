@@ -3,17 +3,13 @@ services:
   nginx:
     build:
       context: .
-      dockerfile: stage1-Dockerfile
+      dockerfile: https-Dockerfile
     env_file:
       - .env
     ports:
       - 80:80
+      - 443:443
     restart: always
     volumes:
       - ./certbot/www:/var/www/certbot/:ro
       - ./certbot/conf/:/etc/nginx/ssl/:ro
-  certbot:
-    image: certbot/certbot:latest
-    volumes:
-      - ./certbot/www/:/var/www/certbot/:rw
-      - ./certbot/conf/:/etc/letsencrypt/:rw

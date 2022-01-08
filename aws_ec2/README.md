@@ -50,16 +50,18 @@ Run "sudo yum update" to apply all updates.
 [ec2-user@ip-987-65-43-210 ~]$
 ```
 
+### Option 1: Manually prepare the instance
+
 #### Update the server
 
 ```shell
-[ec2-user@ip-987-65-43-210 ~]$ sudo yum update
+[ec2-user@ip-987-65-43-210 ~]$ sudo yum -y update
 ```
 
 #### Install git and docker
 
 ```shell
-[ec2-user@ip-987-65-43-210 ~]$ sudo yum install git docker
+[ec2-user@ip-987-65-43-210 ~]$ sudo yum -y install git docker
 ```
 
 Verify that git and docker were successfully installed
@@ -104,6 +106,17 @@ update a couple of configurations and reboot.
 
 [~ ]
 ```
+
+### Option 2: Prepare the instance with a shell script
+
+#### Install and run this shell script.
+The following shell script will execute the previous commands and rebooot the 
+server
+
+```shell
+wget -O - https://raw.githubusercontent.com/smmcbride/docker-nginx-certbot-letsencrypt/breakout/aws_ec2/prepare_instance.sh | bash
+```
+
 
 ## Install and run docker-nginx-certbot-letsencrypt
 Once the reboot is complete, log back into your server and use git to download 
