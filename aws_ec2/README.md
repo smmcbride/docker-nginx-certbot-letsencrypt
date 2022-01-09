@@ -114,7 +114,7 @@ The following shell script will execute the previous commands and rebooot the
 server
 
 ```shell
-wget -O - https://raw.githubusercontent.com/smmcbride/docker-nginx-certbot-letsencrypt/breakout/aws_ec2/prepare_instance.sh | bash
+wget -O - https://raw.githubusercontent.com/smmcbride/docker-nginx-certbot-letsencrypt/master/aws_ec2/prepare_instance.sh | bash
 ```
 
 
