@@ -3,7 +3,7 @@ services:
   nginx:
     build:
       context: .
-      dockerfile: stage3-Dockerfile
+      dockerfile: http_app-Dockerfile
     env_file:
       - .env
     extra_hosts:

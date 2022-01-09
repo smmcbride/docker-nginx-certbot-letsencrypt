@@ -4,7 +4,7 @@
 export $(cat .env | xargs)
 
 docker-compose \
--f stage1-docker-compose.yml \
+-f http-docker-compose.yml \
 run --rm  \
 certbot certonly \
 --webroot \
