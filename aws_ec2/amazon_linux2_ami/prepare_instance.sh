@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-# This script was written and confirmed on an AWS EC2 Instance running the
+# This script was written and confirmed on an AWS EC2 Instance running:
 # Amazon Linux 2 AMI (HVM) - Kernel 5.10 AMI
 
 echo "Updating Linux..."

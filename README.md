@@ -137,7 +137,9 @@ see your application served securely through this proxy.
 
 ### Example Usage:
 
-[Install this project on an AWS EC2 instance](aws_ec2/README.md)
+[Install this project on an AWS Linux2 instance](aws_ec2/amazon_linux2_ami/README.md)
+
+[Install this project on an AWS Unbuntu instance](aws_ec2/ubuntu_server_ami/README.md)
 
 
 ### TODO:

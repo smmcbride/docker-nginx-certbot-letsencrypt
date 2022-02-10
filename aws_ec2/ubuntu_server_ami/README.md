@@ -8,10 +8,10 @@ launch a secure web server using `docker-nginx-certbot-letsencrypt`.
 * An AWS account with access to create/update resources.
 
 ## Configure and launch a new instance 
-![ami](https://user-images.githubusercontent.com/2528364/146795933-59838d8b-1390-4b4d-9d48-eb8687b63ebc.png)
+![ami](https://user-images.githubusercontent.com/2528364/153501472-b54813d8-2a75-419d-a985-28d8fd80b6b1.png)
 
-From the AWS console, launch a new instance using the Amazon Linux 2 AMI. The 
-version at the time of this writing is `5.1.0`.
+From the AWS console, launch a new instance using the Ubuntu Server image. The 
+version at the time of this writing is `20.04 LTS`.
 
 In the security groups, make sure the inbound rules include `HTTP` and `HTTPS`
 or web traffic will not reach the new server.
@@ -38,16 +38,18 @@ Connect through either the `EC2 Instance Connect` portal or by following the
 You should arrive at a prompt that looks something like this:
 
 ```shell
-Last login: Fri Dec 17 20:56:02 2021 from 00.01.2.345
+Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.11.0-1022-aws x86_64)
 
-       __|  __|_  )
-       _|  (     /   Amazon Linux 2 AMI
-      ___|\___|___|
+...
 
-https://aws.amazon.com/amazon-linux-2/
-31 package(s) needed for security, out of 65 available
-Run "sudo yum update" to apply all updates.
-[ec2-user@ip-987-65-43-210 ~]$
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+ubuntu@ip-987-65-43-210:~$ 
+
 ```
 
 ### Option 1: Manually prepare the instance
@@ -55,23 +57,23 @@ Run "sudo yum update" to apply all updates.
 #### Update the server
 
 ```shell
-[ec2-user@ip-987-65-43-210 ~]$ sudo yum -y update
+ubuntu@ip-987-65-43-210:~$ sudo apt update
 ```
 
-#### Install git and docker
+#### Install docker
 
 ```shell
-[ec2-user@ip-987-65-43-210 ~]$ sudo yum -y install git docker
+ubuntu@ip-987-65-43-210:~$ sudo apt install -y make docker.io
 ```
 
 Verify that git and docker were successfully installed
 
 ```shell
-[ec2-user@ip-987-65-43-210 ~]$ git --version
-git version 2.32.0
+ubuntu@ip-987-65-43-210:~$ git --version
+git version 2.25.1
 
-[ec2-user@ip-987-65-43-210 ~]$ docker --version
-Docker version 20.10.7, build f0df350
+ubuntu@ip-987-65-43-210:~$ docker --version
+Docker version 20.10.7, build 20.10.7-0ubuntu5~20.04.2
 ```
 
 #### Install docker-compose
@@ -80,7 +82,7 @@ install version `2.2.2` of docker-compose built for linux x86_64 systems. Verify
 that your system is compatable with the following command:
 
 ```shell
-[ec2-user@ip-987-65-43-210 ~]$ uname -s -m
+ubuntu@ip-987-65-43-210:~$ uname -s -m
 Linux x86_64
 ```
 
@@ -88,22 +90,20 @@ If your system does not match the above, make sure to update the following url
 to download the correct version
 
 ```shell
-[ec2-user@ip-987-65-43-210 ~]$ sudo curl -L https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
-[ec2-user@ip-987-65-43-210 ~]$ sudo chmod +x /usr/local/bin/docker-compose
+ubuntu@ip-987-65-43-210:~$ sudo curl -L https://github.com/docker/compose/releases/download/v2.2.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+ubuntu@ip-987-65-43-210:~$ sudo chmod +x /usr/local/bin/docker-compose
 
-[ec2-user@ip-987-65-43-210 ~]$ docker-compose version
+ubuntu@ip-987-65-43-210:~$ docker-compose version
 Docker Compose version v2.2.2
 ```
 
 #### Update docker permissions and reboot
-We want `ec2-user` to be able to run docker without being `root` so we need to 
+We want `ubuntu` to be able to run docker without being `root` so we need to 
 update a couple of configurations and reboot.
 
 ```shell
-[ec2-user@ip-987-65-43-210 ~]$ sudo chkconfig docker on
-[ec2-user@ip-987-65-43-210 ~]$ sudo usermod -aG docker $USER
-[ec2-user@ip-987-65-43-210 ~]$ sudo reboot
-
+ubuntu@ip-987-65-43-210:~$ sudo usermod -aG docker $USER
+ubuntu@ip-987-65-43-210:~$ sudo reboot
 [~ ]
 ```
 
@@ -114,7 +114,7 @@ The following shell script will execute the previous commands and rebooot the
 server
 
 ```shell
-wget -O - https://raw.githubusercontent.com/smmcbride/docker-nginx-certbot-letsencrypt/master/aws_ec2/prepare_instance.sh | bash
+wget -O - https://raw.githubusercontent.com/smmcbride/docker-nginx-certbot-letsencrypt/master/aws_ec2/ubuntu_server_ami/prepare_instance.sh | bash
 ```
 
 
@@ -124,32 +124,31 @@ the docker-nginx-certbot-letsencrypt project
 
 ```shell
 
-[ec2-user@ip-987-65-43-210 ~]$ git clone https://github.com/smmcbride/docker-nginx-certbot-letsencrypt.git
-
+ubuntu@ip-987-65-43-210:~$ git clone https://github.com/smmcbride/docker-nginx-certbot-letsencrypt.git
 Cloning into 'docker-nginx-certbot-letsencrypt'...
-remote: Enumerating objects: 68, done.
-remote: Counting objects: 100% (68/68), done.
-remote: Compressing objects: 100% (47/47), done.
-remote: Total 68 (delta 34), reused 51 (delta 17), pack-reused 0
-Receiving objects: 100% (68/68), 12.26 KiB | 4.09 MiB/s, done.
-Resolving deltas: 100% (34/34), done.
+remote: Enumerating objects: 116, done.
+remote: Counting objects: 100% (44/44), done.
+remote: Compressing objects: 100% (28/28), done.
+remote: Total 116 (delta 23), reused 35 (delta 16), pack-reused 72
+Receiving objects: 100% (116/116), 27.17 KiB | 5.43 MiB/s, done.
+Resolving deltas: 100% (60/60), done.
 
-[ec2-user@ip-987-65-43-210 ~]$ cd docker-nginx-certbot-letsencrypt/
+ubuntu@ip-987-65-43-210:~/docker-nginx-certbot-letsencrypt$
 ```
 
 Generate the required `.env` file. Replace the example values with your real 
 domain and email address.
 
 ```shell
-[ec2-user@ip-987-65-43-210 docker-nginx-certbot-letsencrypt]$ echo LETSENCRYPT_DOMAIN=example.com >>.env
-[ec2-user@ip-987-65-43-210 docker-nginx-certbot-letsencrypt]$ echo LETSENCRYPT_EMAIL=name@example.com >>.env
+ubuntu@ip-987-65-43-210:~/docker-nginx-certbot-letsencrypt$ echo LETSENCRYPT_DOMAIN=example.com >>.env
+ubuntu@ip-987-65-43-210:~/docker-nginx-certbot-letsencrypt$ echo LETSENCRYPT_EMAIL=name@example.com >>.env
 ```
 
 Run the HTTP server and verify you can see the URL in the browser
 
 ```shell
 
-[ec2-user@ip-987-65-43-210 docker-nginx-certbot-letsencrypt]$ make http
+ubuntu@ip-987-65-43-210:~/docker-nginx-certbot-letsencrypt$ make http
 ```
 
 ![screen1](https://user-images.githubusercontent.com/2528364/146796147-25f6cff7-7df7-4399-a570-92dca62715d2.png)
@@ -159,8 +158,8 @@ certificate is being properly implemented. The browser should produce a warning
 that the site is not secure. This is what we want.
 
 ```shell
-[ec2-user@ip-987-65-43-210 docker-nginx-certbot-letsencrypt]$ make staging_cert
-[ec2-user@ip-987-65-43-210 docker-nginx-certbot-letsencrypt]$ make https
+ubuntu@ip-987-65-43-210:~/docker-nginx-certbot-letsencrypt$ make staging_cert
+ubuntu@ip-987-65-43-210:~/docker-nginx-certbot-letsencrypt$ make https
 ```
 
 ![screen2](https://user-images.githubusercontent.com/2528364/146796294-a614af7c-37b0-42b6-a056-f33b6a03ba2f.png)
@@ -170,8 +169,8 @@ goes well reload the browser and vereify you have a secure web page, with the
 _lock_ icon next to the domain name in the browser.
 
 ```shell
-[ec2-user@ip-987-65-43-210 docker-nginx-certbot-letsencrypt]$ make production_cert
-[ec2-user@ip-987-65-43-210 docker-nginx-certbot-letsencrypt]$ make https
+ubuntu@ip-987-65-43-210:~/docker-nginx-certbot-letsencrypt$ make production_cert
+ubuntu@ip-987-65-43-210:~/docker-nginx-certbot-letsencrypt$ make https
 ```
 
 ![screen3](https://user-images.githubusercontent.com/2528364/146796352-6e709ee2-213e-419f-b380-a65e5b8e4bb0.png)
@@ -184,18 +183,18 @@ our local application.  For this example we will use
 launch a React app through yarn on port 3000:
 
 ```shell
-[ec2-user@ip-987-65-43-210 docker-nginx-certbot-letsencrypt]$ cd
-[ec2-user@ip-987-65-43-210 ~]$ git clone https://github.com/smmcbride/docker-react.git
-[ec2-user@ip-987-65-43-210 ~]$ cd docker-react/
-[ec2-user@ip-987-65-43-210 docker-react]$ make up
+ubuntu@ip-987-65-43-210:~/docker-nginx-certbot-letsencrypt$ cd
+ubuntu@ip-987-65-43-210:~$ git clone https://github.com/smmcbride/docker-react.git
+ubuntu@ip-987-65-43-210:~$ cd docker-react/
+ubuntu@ip-987-65-43-210:~/docker-react$ make up
 ```
 
 Return to the `nginx` project, configure the port and re-launch nginx:
 
 ```shell
-[ec2-user@ip-987-65-43-210 docker-react]$ cd
-[ec2-user@ip-987-65-43-210 ~]$ cd docker-nginx-certbot-letsencrypt/
-[ec2-user@ip-987-65-43-210 docker-nginx-certbot-letsencrypt]$ echo APPLICATION_PORT=3000 >>.env
+ubuntu@ip-987-65-43-210:~/docker-react$ cd
+ubuntu@ip-987-65-43-210:~$ cd docker-nginx-certbot-letsencrypt/
+ubuntu@ip-987-65-43-210:~/docker-nginx-certbot-letsencrypt$ echo APPLICATION_PORT=3000 >>.env
 ```
 
 Launch a secure `nginx` proxy pointed to the local application's port:
